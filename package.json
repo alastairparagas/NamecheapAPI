@@ -1,0 +1,42 @@
+{
+  "name": "namecheap-api",
+  "version": "1.0.0",
+  "description": "Node.JS library for the Namecheap API",
+  "main": "namecheap-api.js",
+  "scripts": {
+    "test": "gulp jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/alastairparagas/NamecheapAPI.git"
+  },
+  "keywords": [
+    "namecheap",
+    "nodejs",
+    "library"
+  ],
+  "author": "Alastair Paragas <alastairparagas@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/alastairparagas/NamecheapAPI/issues"
+  },
+  "homepage": "https://github.com/alastairparagas/NamecheapAPI#readme",
+  "dependencies": {
+    "lodash": "^3.10.0",
+    "request": "^2.58.0",
+    "xml2js": "^0.4.9"
+  },
+  "devDependencies": {
+    "chai": "^3.2.0",
+    "colors": "^1.1.2",
+    "gulp": "^3.9.0",
+    "gulp-jshint": "^1.11.2",
+    "gulp-mocha": "^2.1.3",
+    "gulp-plumber": "^1.0.1",
+    "gulp-watch": "^4.3.3",
+    "jshint-stylish": "^2.0.1",
+    "mocha": "^2.2.5",
+    "require-uncached": "^1.0.2",
+    "sinon": "^1.15.4"
+  }
+}

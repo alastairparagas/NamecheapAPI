@@ -1,0 +1,12 @@
+{
+    "camelcase": true,
+    "freeze": true,
+    "validthis": true,
+    "maxlen": 80,
+    "newcap": true,
+
+    "browser": true,
+    "jasmine": true,
+    "worker": true,
+    "esnext": false
+}
