@@ -1,4 +1,4 @@
-# namecheap-api
+# namecheap-api ![](https://travis-ci.org/alastairparagas/NamecheapAPI.svg)
 
 > NodeJS library to make Namecheap API requests
 
