@@ -77,8 +77,13 @@ describe('config (without state)', function () {
         expect(config.get("UserName")).to.equal("SomeUser");
     });
     
-    it("provides information on what properties need to be set", function () {
-        expect(config.getAllConfigurable()).to.be.instanceof(Array);
+    it("notifies if required configuration is satisfied", function () {
+        expect(config.isSatisfied()).to.be.false;
+        
+        config.set("ApiUser", "SomeUser");
+        config.set("ApiKey", "SomeKey");
+        config.set("ClientIp", "192.168.1.1");
+        expect(config.isSatisfied()).to.be.true;
     });
 
 });

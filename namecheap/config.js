@@ -4,11 +4,11 @@
     var lodash = require('lodash'),
         
         config = {},
-        configurableProperties = ['ApiUser', 'ApiKey', 'UserName', 'ClientIp'];
+        requiredProperties = ['ApiUser', 'ApiKey', 'UserName', 'ClientIp'];
     
     function set(configName, configValue) {
         
-        if (configurableProperties.indexOf(configName) === -1) {
+        if (requiredProperties.indexOf(configName) === -1) {
             throw new Error("That is not a configurable property.");
         }
         if (!lodash.isString(configValue) || configValue.length === 0) {
@@ -35,15 +35,17 @@
         return lodash.clone(config);   
     }
     
-    function getAllConfigurable() {
-        return lodash.clone(configurableProperties);
+    function isSatisfied() {
+        return lodash.every(requiredProperties, function (requiredProperty) {
+            return config.hasOwnProperty(requiredProperty);   
+        });
     }
     
     module.exports = {
         set: set,
         get: get,
         getAll: getAll,
-        getAllConfigurable: getAllConfigurable
+        isSatisfied: isSatisfied
     };
     
 }());
