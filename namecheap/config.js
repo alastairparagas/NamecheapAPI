@@ -35,10 +35,15 @@
         return lodash.clone(config);   
     }
     
+    function getAllConfigurable() {
+        return lodash.clone(configurableProperties);
+    }
+    
     module.exports = {
         set: set,
         get: get,
-        getAll: getAll
+        getAll: getAll,
+        getAllConfigurable: getAllConfigurable
     };
     
 }());

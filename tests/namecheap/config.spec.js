@@ -1,4 +1,4 @@
-describe('Config (without state)', function () {
+describe('config (without state)', function () {
 
     var expect,
         requireUncached,
@@ -75,6 +75,10 @@ describe('Config (without state)', function () {
         config.set("ApiUser", "AnotherUser");
 
         expect(config.get("UserName")).to.equal("SomeUser");
+    });
+    
+    it("provides information on what properties need to be set", function () {
+        expect(config.getAllConfigurable()).to.be.instanceof(Array);
     });
 
 });
