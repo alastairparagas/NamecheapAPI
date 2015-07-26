@@ -12,10 +12,6 @@ describe('config (without state)', function () {
         config = requireUncached('../../namecheap/config');
     });
 
-    afterEach(function () {
-        delete require.cache['../../namecheap/config'];
-    });
-
     it("sets and gets configurable properties", function () {
         expect(function () {
             config.set("ApiUser", "SomeUser");
