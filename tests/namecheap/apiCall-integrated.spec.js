@@ -1,33 +1,37 @@
-describe("apiCall (integrated)", function () {
-    
+describe('apiCall (integrated)', function () {
+
     var expect,
         requireUncached,
-        Promise,
-        
-        apiCall,
-        config;
-    
-    before(function () {
+
+        apiCall;
+
+    beforeEach(function () {
         expect = require('chai').expect;
-        
-        Promise = require('es6-promise').Promise;
-        
-        apiCall = require('../../namecheap/apiCall');
-        config = require('../../namecheap/config');
-        
-        config.set("ApiUser", "SomeUser");
-        config.set("ApiKey", "SomeKey");
-        config.set("ClientIp", "192.168.1.1");
+        requireUncached = require('require-uncached');
+
+        apiCall = requireUncached('../../namecheap/apiCall');
     });
-    
-    after(function () {
-        // Prevent from messing up unit tests - remove them from cache
-        delete require.cache[require.resolve('../../namecheap/config')];
-        delete require.cache[require.resolve('../../namecheap/apiCall')];
+
+    it("throws an error if no/invalid CommandName is passed", function () {
+        expect(function () {
+            apiCall();
+        }).to.throw(Error);
     });
-    
-    it("returns a Q promise provided correct config", function () {
-        expect(apiCall("SomeCommand", {})).to.be.instanceof(Promise);
+
+    it("throws an error if requestParams are incorrect", function () {
+        expect(function () {
+            apiCall("someCommand", "someParameter");
+        }).to.throw(Error);
+
+        expect(function () {
+            apiCall("anotherCommand", true);
+        }).to.throw(Error);
     });
-    
+
+    it("throws an error if config/global params are not set", function () {
+        expect(function () {
+            apiCall("someCommand", {});
+        }).to.throw(Error);
+    });
+
 });

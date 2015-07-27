@@ -3,6 +3,7 @@
 
     var lodash = require('lodash'),
         request = require('request'),
+        queryString = require('query-string'),
         xml2js = require('xml2js').parseString,
         async = require('async'),
         Promise = require('es6-promise').Promise,
@@ -20,17 +21,14 @@
 
         var requestUrl = "https://api.namecheap.com/xml.response?",
             providedConfig = config.getAll(),
-            configProp,
-            requestProp;
+            requestPayload = {};
         if (!config.isSatisfied()) {
             throw new Error("All Global Parameters must be set.");
         }
-        for (configProp in providedConfig) {
-            requestUrl += configProp + "=" + providedConfig[configProp];
-        }
-        for (requestProp in requestParams) {
-            requestUrl += requestProp + "=" + requestParams[requestProp];
-        }
+
+        lodash.merge(requestPayload, requestParams, providedConfig);
+        requestPayload.Command = commandName;
+        requestUrl += queryString.stringify(requestPayload);
 
         function promiseExecutor(resolve, reject) {
             async.waterfall([
@@ -45,27 +43,40 @@
                 function (xmlString, callback) {
                     xml2js(xmlString, function (error, data) {
                         if (error && !data) {
-                            return callback(error);   
+                            return callback(error);
                         }
                         callback(null, data);
                     });
                 }
             ], function (err, result) {
+                var responseObject = {
+                    requestPayload: lodash.clone(requestPayload),
+                    requestUrl: requestUrl
+                };
+
                 if (err) {
-                    return reject(err.message);   
+                    responseObject.response = err;
+                    return reject(responseObject);
                 }
-                
-                var responseErrors = result.ApiResponse.Errors,
-                    responseCode = responseErrors[0].Error[0].$.Number,
-                    responseMessage = responseErrors[0].Error[0]._;
+
+                var responseErrors,
+                    responseCode,
+                    responseMessage;
                 if (result.ApiResponse.$.Status === "ERROR") {
+                    responseErrors = result.ApiResponse.Errors;
+                    responseCode = responseErrors[0].Error[0].$.Number;
+                    responseMessage = responseErrors[0].Error[0]._;
                     if (responseCode) {
-                        return reject(responseCode + ": " + responseMessage);  
+                        responseObject.response = new Error(responseCode + 
+                            ": " + responseMessage);  
+                    } else {
+                        responseObject.response = new Error(responseMessage);
                     }
-                    return reject(responseMessage);
+                    return reject(responseObject);
                 }
                 
-                resolve(result.ApiResponse.CommandResponse);
+                responseObject.response = result.ApiResponse.CommandResponse;
+                resolve(responseObject);
             });
 
         }
