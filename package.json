@@ -25,6 +25,7 @@
     "async": "^1.4.0",
     "es6-promise": "^2.3.0",
     "lodash": "^3.10.0",
+    "query-string": "^2.4.0",
     "request": "^2.58.0",
     "xml2js": "^0.4.9"
   },
