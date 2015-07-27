@@ -1,4 +1,4 @@
-# namecheap-api ![](https://travis-ci.org/alastairparagas/NamecheapAPI.svg)
+# namecheap-api ![Build Status](https://travis-ci.org/alastairparagas/NamecheapAPI.svg) [![Dependency Status](https://www.versioneye.com/user/projects/55b62863653762001a00007d/badge.svg?style=flat)](https://www.versioneye.com/user/projects/55b62863653762001a00007d)
 
 > NodeJS library to make Namecheap API requests
 
@@ -20,10 +20,34 @@ After filling the global parameters in, you can now make API calls to Namecheap!
 
 ## Setting Global Parameters
 
-To set the Namecheap global parameters, do this:
+To set the Namecheap global parameters, do the following. Remember to set all your Namecheap global parameters!
 
 ```javascript
 var namecheapApi = require('namecheap-api');
 
 namecheapApi.config.set("ApiUser", "YourUsernameHere");
+```
+
+## Response and the Response Structure
+
+namecheap-api's apiCall functionality always returns a promise response with 3 properties: `requestUrl`, `requestPayload` and `response`.
+
+`response` holds an Error object if there are XML parsing/network errors or if Namecheap returns an ERROR (with the promise, rejected). `response` holds the parsed XML (turned into an object) if there are no XML parsing/network errors AND Namecheap returns an OK (with the promise, resolved). The parsed XML object is obtained using [xml2js](https://www.npmjs.com/package/xml2js). A StackOverflow article of how the output is like [can be viewed here](http://stackoverflow.com/questions/20238493/xml2js-how-is-the-output).
+
+```javascript
+var namecheapApi = require('namecheap-api');
+
+// If there are no XML parsing/network errors and Namecheap returns an OK
+namecheapApi.apiCall("SomeCommand", {}).then(function (data) {
+    console.log(data.requestUrl);
+    console.log(data.requestPayload);
+    console.log(data.response); // data.response is the parsed response
+});
+
+// If there are XML parsing/network errors OR Namecheap returns an ERROR
+namecheap.apiCall("SomeCommand", {}).catch(function (data) {
+    console.log(data.requestUrl);
+    console.log(data.requestPayload);
+    console.log(data.response); // data.response is an Error object
+});
 ```
