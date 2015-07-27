@@ -1,4 +1,4 @@
-describe('config (without state)', function () {
+describe('config', function () {
 
     var expect,
         requireUncached,
