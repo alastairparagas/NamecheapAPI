@@ -10,7 +10,7 @@
 
         config = require('./config');
 
-    function apiCall(commandName, requestParams) {
+    function apiCall(commandName, requestParams, sandbox) {
 
         if (!commandName || !lodash.isString(commandName)) {
             throw new Error("CommandName is required and must be a string.");
@@ -19,7 +19,7 @@
             throw new Error("requestParams must be an object.");    
         }
 
-        var requestUrl = "https://api.namecheap.com/xml.response?",
+        var requestUrl = "https://api."+(sandbox?'sandbox.':'')+"namecheap.com/xml.response?",
             providedConfig = config.getAll(),
             requestPayload = {};
         if (!config.isSatisfied()) {
