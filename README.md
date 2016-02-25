@@ -45,9 +45,17 @@ namecheapApi.apiCall("SomeCommand", {}).then(function (data) {
 });
 
 // If there are XML parsing/network errors OR Namecheap returns an ERROR
-namecheap.apiCall("SomeCommand", {}).catch(function (data) {
+namecheapApi.apiCall("SomeCommand", {}).catch(function (data) {
     console.log(data.requestUrl);
     console.log(data.requestPayload);
     console.log(data.response); // data.response is an Error object
 });
+```
+
+## Sandbox mode
+
+You can now use Namecheap API's sandbox mode within `namecheap-api`! Whenever using the `apiCall` function, if you want to use Namecheap's sandbox server, just make sure to pass in `true` as third parameter.
+
+```javascript
+namecheapApi.apiCall("SomeCommand", {}, true);
 ```
