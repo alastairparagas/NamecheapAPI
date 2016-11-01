@@ -59,3 +59,11 @@ You can now use Namecheap API's sandbox mode within `namecheap-api`! Whenever us
 ```javascript
 namecheapApi.apiCall("SomeCommand", {}, true);
 ```
+
+## Web proxy
+
+`namecheap-api` uses the `request` module to make api calls which will obey the HTTP_PROXY, HTTPS_PROXY and NO_PROXY environment variables.  To specify a specific proxy for Namecheap API calls only you can set the "Proxy" config variable.
+
+```javascript
+namecheapApi.config.set("Proxy", "http://user:pass@someproxy.com:80");
+```
