@@ -33,11 +33,11 @@
         function promiseExecutor(resolve, reject) {
             async.waterfall([
                 function (callback) {
-                    var r = request;
-                    if( providedConfig['Proxy'] != '' ){
-                      r = request.defaults({'proxy':providedConfig['Proxy']});
+                    var requestOptions = {
+                      url: requestUrl
                     }
-                    r(requestUrl, function (error, response, body) {
+                    if(providedConfig['Proxy'] != '') requestOptions.proxy = providedConfig['Proxy'];
+                    request(requestOptions, function (error, response, body) {
                         if (error && !body) {
                             return callback(error);
                         }
