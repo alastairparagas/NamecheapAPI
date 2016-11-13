@@ -16,7 +16,7 @@
             throw new Error("CommandName is required and must be a string.");
         }
         if (requestParams && !lodash.isPlainObject(requestParams)) {
-            throw new Error("requestParams must be an object.");    
+            throw new Error("requestParams must be an object.");
         }
 
         var requestUrl = "https://api."+(sandbox?'sandbox.':'')+"namecheap.com/xml.response?",
@@ -33,7 +33,11 @@
         function promiseExecutor(resolve, reject) {
             async.waterfall([
                 function (callback) {
-                    request(requestUrl, function (error, response, body) {
+                    var requestOptions = {
+                      url: requestUrl
+                    }
+                    if(providedConfig['Proxy'] != '') requestOptions.proxy = providedConfig['Proxy'];
+                    request(requestOptions, function (error, response, body) {
                         if (error && !body) {
                             return callback(error);
                         }
@@ -67,14 +71,14 @@
                     responseCode = responseErrors[0].Error[0].$.Number;
                     responseMessage = responseErrors[0].Error[0]._;
                     if (responseCode) {
-                        responseObject.response = new Error(responseCode + 
-                            ": " + responseMessage);  
+                        responseObject.response = new Error(responseCode +
+                            ": " + responseMessage);
                     } else {
                         responseObject.response = new Error(responseMessage);
                     }
                     return reject(responseObject);
                 }
-                
+
                 responseObject.response = result.ApiResponse.CommandResponse;
                 resolve(responseObject);
             });

@@ -18,18 +18,21 @@ describe('config', function () {
             config.set("ApiKey", "Some-key");
             config.set("UserName", "SomeUser");
             config.set("ClientIp", "192.168.1.1");
+            config.set("Proxy", 'http://someproxyserver:8080');
         }).not.to.throw();
 
         expect(config.get("ApiUser")).to.equal("SomeUser");
         expect(config.get("ApiKey")).to.equal("Some-key");
         expect(config.get("UserName")).to.equal("SomeUser");
         expect(config.get("ClientIp")).to.equal("192.168.1.1");
+        expect(config.get("Proxy")).to.equal("http://someproxyserver:8080");
 
         expect(config.getAll()).to.deep.equal({
             ApiUser: "SomeUser",
             ApiKey: "Some-key",
             UserName: "SomeUser",
-            ClientIp: "192.168.1.1"
+            ClientIp: "192.168.1.1",
+            Proxy: "http://someproxyserver:8080"
         });
     });
 
@@ -72,10 +75,10 @@ describe('config', function () {
 
         expect(config.get("UserName")).to.equal("SomeUser");
     });
-    
+
     it("notifies if required configuration is satisfied", function () {
         expect(config.isSatisfied()).to.be.false;
-        
+
         config.set("ApiUser", "SomeUser");
         config.set("ApiKey", "SomeKey");
         config.set("ClientIp", "192.168.1.1");
