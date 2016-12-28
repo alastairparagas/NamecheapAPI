@@ -1,4 +1,4 @@
-# namecheap-api ![Build Status](https://travis-ci.org/alastairparagas/NamecheapAPI.svg) [![Dependency Status](https://www.versioneye.com/user/projects/55b62863653762001a00007d/badge.svg?style=flat)](https://www.versioneye.com/user/projects/55b62863653762001a00007d)
+# namecheap-api ![Build Status](https://travis-ci.org/alastairparagas/NamecheapAPI.svg) [![npm](https://img.shields.io/npm/dt/namecheap-api.svg)](https://www.npmjs.com/package/namecheap-api)
 
 > NodeJS library to make Namecheap API requests
 
