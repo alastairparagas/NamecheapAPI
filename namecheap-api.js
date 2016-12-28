@@ -1,12 +1,7 @@
-(function () {
-    'use strict';
-    
-    var apiCall = require('./namecheap/apiCall'),
-        config = require('./namecheap/config');
-    
-    module.exports = {
-        apiCall: apiCall,
-        config: config
-    };
+var apiCall = require('./namecheap/apiCall'),
+    config = require('./namecheap/config');
 
-}());
+module.exports = {
+  apiCall: apiCall,
+  config: config
+};
